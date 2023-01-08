@@ -1,23 +1,32 @@
-﻿# For RotmgPCap v1.0.2.0
+﻿# RotmgPCap v1.1.0
+# Version 5
+# Jan 2023
+# file: proto.txt
+#
+# Please dm me at Rappelr#2228 if you make any additions/fixes, I'd love to add them
+#
+########################################################################
+#
+# ABOUT:
 #
 # This file defines premade parsing structures for packets
 # Feel free to modify it, here follows an explanation
 #
 # All spaces are ignored when parsing
-# You are free to add # comments appending lines
+# You are free to add comments using + appending lines
 # You can combine lines using a + at the end
 # Type names are case sensitive
 # To make a type referencable add a @ to the start of its name
 #
 # #### PREMADE TYPES:
 # SByte, Byte		1 byte
-# Int16, UInt16		2 bytes
+# Int16, UInt16,	2 bytes
 # Int32, UInt32,	4 bytes
-# Float				4 bytes
-# Compressed		1+ byte
-# Utf				1+ byte
-# Boolean			1 byte
-# Void				0 byte (to be used in optionals)
+# Float			    4 bytes
+# Compressed		1+ byte(s)
+# Utf			    1+ byte(s)
+# Boolean		    1 byte
+# Void			    0 bytes (to be used in optionals)
 #
 # #### CUSTOM TYPE DEFINITION:
 # :typename; type:name, type:name, type:name...
@@ -28,17 +37,17 @@
 # #### LIST USAGE:
 # (counttypename* type):name
 #
-# #### CONTANT OPTION USAGE:
+# #### CONSTANT OPTION USAGE:
 # (optionaltypename$ optionname ? typeifmatch : typeifnotmatch):value
 #
 # #### PACKET DEFINITION:
 # name,id; type, type, type...
 #
-#
+########################################################################
+# OPTIONS:
 
-#Options
-
-$StringStats; 31, 38, 54, 62, 80, 82, 115, 123
+$Zero; 0
+$StringStats; 31, 38, 54, 62, 80, 82, 115, 123, 6
 $NotificationStatIncrease; 0
 $NotificationServerMessage; 1
 $NotificationErrorMessage; 2
@@ -49,16 +58,21 @@ $NotificationObjectStatusText; 6
 $NotificationDeath; 7
 $NotificationDungeon; 8
 
-#Types
+########################################################################
+# TYPES:
 
 :WorldPosData; Float:X, Float:Y
 :MoveRecord; Int32:Time, Float:X, Float:Y
 :GroundTile; Int16:X, Int16:Y, UInt16:Type
-
-:StatData; Byte:@StatType, (StatType$ StringStats ? Utf : Compressed):Value, Byte:MagicNumber
-:ObjectStatusData; Compressed:ObjectId, WorldPosData:Position, Compressed:@StatDataCount, (StatDataCount* StatData):StatData
+:StatData; Byte:@StatType, (StatType$ StringStats ? Utf : Compressed):Value, Byte:@MagicNumber
+:ObjectStatusData; Compressed:ObjectId, WorldPosData:Position, Compressed:@StatDataCount, +
+   (StatDataCount* StatData):StatData
 :ObjectData; UInt16:ObjectType, ObjectStatusData:StatusData
 :SlotObjectData; Int32:ObjectId, Int32:SlotId, Int32:ObjectType
+:QuestData; Utf:QuestId, Utf:Name, Utf:Description, Utf:Expiration, Int32:Weight, Int32:Category, +
+   Int16:@RequirementCount, (RequirementCount* Int32):Requirements, +
+   Int16:@RewardCount, (RewardCount* Int32):Rewards, Boolean:Completed, Boolean:ItemOfChoice, +
+   Boolean:Repeatable
 
 :NotificationStatIncrease; Utf:Message
 :NotificationServerMessage; Utf:Message
@@ -70,17 +84,20 @@ $NotificationDungeon; 8
 :NotificationDeath; Utf:Message, Int32:PictureObjType
 :NotificationDungeon; Utf:Message, Int32:PictureObjType
 
-#Packets
+########################################################################
+# PACKETS
 
 Failure, 0; Int32:ErrorId, Utf:ErrorDescription
 
 Hello, 1; Utf:BuildVersion, Int32:GameId, Utf:Guid, Int32:KeyTime, Int16:@KeyLength, +
-   (KeyLength* Byte):Key, Utf:EntryTag, Utf:GameNet, Utf:GameNetUserId, Utf:PlayPlatform, +
-   Utf:PlatformToken, Utf:UserToken, Utf:Token
+   (KeyLength* Byte):Key, Utf:EntryTag, Utf:GameNet, Utf:GameNetUserId, +
+   Utf:UserToken, Utf:Token
 
 RequestTrade, 5; Utf:Name
 
 ClaimDailyReward, 3; Utf:ClaimKey, Utf:ClaimType
+
+QuestFetchResponse, 6; Int16:@QuestCount, (QuestCount* QuestData):Quests, Int16:NextRefreshPrice
 
 JoinGuild, 7; Utf:Name
 
@@ -93,11 +110,13 @@ PlayerText, 10; Utf:Text
 
 UseItem, 11; Int32:Time, SlotObjectData:SlotData, WorldPosData:Position, Byte:UseType
 
-ServerPlayerShoot, 12; Int16:BulletId, Int32:OwnerId, Int16:ContainerType, WorldPosData:StartingPosition, Float:Angle, + 
-   Int16:Damage, Int32:ProjectileOwnerId, Boolean:IsMultiShowCreep, SByte:ShotCount, Float:AngleInc
+ServerPlayerShoot, 12; UInt16:BulletId, Int32:OwnerId, Int32:ContainerType, WorldPosData:StartingPosition, Float:Angle, + 
+   Int16:Damage, Int32:ProjectileOwnerId, Boolean:IsMultiShowCreep
+
+ShowEffect, 13; Byte:EffectType, Byte:Bitmask, Void:Unsupported
 
 TradeAccepted, 14; Int16:@ClientOfferLength, (ClientOfferLength* Boolean):ClientOffer, +
-   Int16:@PartnerOfferLength, (ClientOfferLength* Boolean):PartnerOffer
+   Int16:@PartnerOfferLength, (PartnerOfferLength* Boolean):PartnerOffer
 
 FeedPet, 16; Byte:PetTransType, Int32:PetIdOne, Int32:PetIdTwo, Int32:ObjectId, Byte:PaymentType, +
    Int16:@SlotsLength, (SlotsLength* SlotObjectData):Slots
@@ -106,42 +125,45 @@ Goto, 18; Int32:ObjectId, WorldPosData:Position
 
 InvSwap, 19; Int32:Time, WorldPosData:Position, SlotObjectData:Slot1, SlotObjectData:Slot2
 
+OtherHit, 20; Int32:Time, UInt16:BulletId, Int32:OwnerId, Int32:TargetId
+
 BuyResult, 22; Int32:Result, Utf:ResultString
 
 ActivePetUpdateRequest, 24; Byte:CommandType, Int32:InstanceId
 
-EnemyHit, 25; Int32:Time, Int16:BulletId, Int32:OwnerId, Int32:TargetId, Boolean:Kill, Int32:ProjectileOwnerId
+EnemyHit, 25; Int32:Time, UInt16:BulletId, Int32:OwnerId, Int32:TargetId, Boolean:Kill, Int32:ProjectileOwnerId
 
 EditAccountList, 27; Int32:AccountListId, Boolean:Add, Int32:ObjectId
 
-PlayerShoot, 30; Int32:Time, Int16:BulletId, Int16:ContainerType, WorldPosData:StartingPosition, +
-   Float:Angle, Int16:SpeedMultiplier, Int16:LifeMultiplier, SByte:BurstId
+PlayerShoot, 30; Int32:Time, UInt16:BulletId, Int16:ContainerType, Byte:unknown1, WorldPosData:StartingPosition, +
+   Float:Angle, SByte:BurstId
 
 Pong, 31; Int32:Serial, Int32:Time
 
 TradeDone, 34; Int32:TradeCode, Utf:Description
 
-EnemyShoot, 35; Byte:BulletId, Int32:OwnerId
+EnemyShoot, 35; UInt16:BulletId, Int32:OwnerId, Byte:BulletType, WorldPosData:StartingPosition, +
+   Float:Angle, SByte:BurstId
 
 AcceptTrade, 36; Int16:@ClientOfferLength, (ClientOfferLength* Boolean):ClientOffer, +
    Int16:@PartnerOfferLength, (ClientOfferLength* Boolean):PartnerOffer
 
 ChangeGuildRank, 37; Utf:Name, Int32:Rank
 
-Move, 42; Int32:TickId, Int32:Time, Int32:RealTimeMS, WorldPosData:NewPosition, +
-   Int16:@MoveRecordCount, (MoveRecordCount* MoveRecord):MoveRecord
+Move, 42; Int32:TickId, Int32:Time, +
+    Int16:@MoveRecordCount, (MoveRecordCount* MoveRecord):MoveRecord
 
 Text, 44; Utf:Name, Int32:ObjectId, Int16:NumStars, Byte:BubbleTime, Utf:Recipient, +
    Utf:Message, Utf:CleanText, Boolean:IsSupporter, Int32:StarBg
 
-Reconnect, 45; Utf:Name, Utf:Host, UInt32:Port, Int32:GameId, Int32:KeyTime, +
-   Boolean:IsFromArena, Int16:@KeyLength, (KeyLength* Byte):Key
+Reconnect, 45; Utf:Name, Utf:Host, Int16:Port, Int32:GameId, Int32:KeyTime, +
+   Boolean:IsFromArena, Compressed:@KeyLength, (KeyLength* Byte):Key
 
 UsePortal, 47; Int32:ObjectId
 
 GoToQuestRoom, 48;
 
-AllyShoot, 49; Int16:BulletId, Int32:OwnerId, Int16:ContainerType, Float:Angle, Boolean:Bard
+AllyShoot, 49; UInt16:BulletId, Int32:OwnerId, Int16:ContainerType, Float:Angle, Boolean:Bard
 
 ResetDailyQuests, 52;
 
@@ -155,7 +177,8 @@ CreateGuild, 59; Utf:Name
 
 Create, 61; Int16:ClassType, Int16:SkinType, Boolean:IsChallenger
 
-Update, 62; Compressed:@GroundTileCount, (GroundTileCount* GroundTile):GroundTile, +
+Update, 62; WorldPosData:Position, Byte:unknown1, +
+   Compressed:@GroundTileCount, (GroundTileCount* GroundTile):GroundTile, +
    Compressed:@ObjectDataCount, (ObjectDataCount* ObjectData):ObjectData, +
    Compressed:@DropCount, (DropCount* Compressed):Drop
 
@@ -176,19 +199,27 @@ ClientStat, 69; Utf:Name, Int32:Value
 
 Teleport, 74; Int32:ObjectId, Utf:ObjectName
 
+Damage, 75; Int32:TargetId, Byte:@EffectCount, (EffectCount* Byte):Effect, UInt16:Damage, +
+   Boolean:ArmorPierce, UInt16:BulletId, Int32:ObjectId
+
 InvitedToGuild, 77; Utf:Name, Utf:GuildName
 
 UpdateAck, 81;
 
 QuestObjId, 82; Int32:ObjectId, Compressed:@ExtraObjectIdsLength, (ExtraObjectIdsLength* Compressed):ExtraObjectIds
 
+RealmHeroResponse, 84; Int32:RealmHeroCount
+
 TradeStart, 86;
 
 TradeRequested, 88; Utf:Name
 
+PlayerHit, 90; UInt16:BulletId, Int32:ObjectId
+
 MapInfo, 92; Int32:Width, Int32:Height, Utf:Name, Utf:DisplayName, Utf:RealmName, +
    UInt32:Seed, Int32:Background, Int32:Difficulty, Boolean:AllowPlayerTeleport, +
-   Boolean:ShowDisplays, Int16:MaxPlayers, UInt32:GameOpenedTime, Utf:ClientVersion
+   Boolean:ShowDisplays, Boolean:unknown1,  Int16:MaxPlayers, +
+   UInt32:GameOpenedTime, Utf:ClientVersion, Int32:unknown2, Utf:DungeonModifiers
 
 InvResult, 95; Byte:Result
 
@@ -198,7 +229,7 @@ QuestFetchAsk, 98;
 
 ShootAck, 100; Int32:Time
 
-CreateSuccess, 101; Int32:ObjectId, Int32:CharacterId
+CreateSuccess, 101; Int32:ObjectId, Int32:CharacterId, Utf:Unknown1
 
 GuildInvite, 104; Utf:Name
 
@@ -214,6 +245,6 @@ VaultUpdate, 117; Compressed:VaultUpgradeCost, Compressed:PotionUpgradeCost, Com
 
 ForgeUnlockedBlueprints, 120; SByte:@Count, (Count* Compressed):UnlockedBluePrints
 
-ShootAckCounter, 121; Int32:Time, Int32:Amount
+ShootAckCounter, 121; Int32:Time, Int16:Amount
 
 ChangeAllyShoot, 122; Int32:Toggle

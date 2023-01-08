@@ -2,13 +2,13 @@
 
 namespace RotmgPCap.Packets
 {
-    internal class PacketStructure
+    internal class PacketProto
     {
         internal readonly string Name;
         internal readonly byte Id;
         internal readonly TypeInstance[] Types;
 
-        internal PacketStructure(string name, byte id, TypeInstance[] types)
+        internal PacketProto(string name, byte id, TypeInstance[] types)
         {
             Name = name;
             Id = id;

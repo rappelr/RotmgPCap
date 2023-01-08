@@ -1,19 +1,20 @@
 ﻿using RotmgPCap.Packets.DataTypes;
+using RotmgPCap.Properties;
 using System;
 using System.IO;
 
 namespace RotmgPCap.Packets
 {
-    internal class PacketStructureFileParser
+    internal class ProtoFileParser
     {
 
         private readonly PacketManager manager;
 
         private int genericNameCounter;
 
-        internal PacketStructureFileParser(PacketManager manager) => this.manager = manager;
+        internal ProtoFileParser(PacketManager manager) => this.manager = manager;
 
-        internal string ParsePacketStructureFile()
+        internal string Parse()
         {
 
             manager.Profile = new PacketReaderProfile();
@@ -28,11 +29,11 @@ namespace RotmgPCap.Packets
 
                 try
                 {
-                    file = new StreamReader("PacketStructures.txt");
+                    file = new StreamReader(Resources.ProtoFilePath);
                 }
                 catch
                 {
-                    return "Failed to load PacketStructures.txt";
+                    return $"Failed to load {Resources.ProtoFilePath}";
                 }
 
                 while (true)
@@ -67,7 +68,7 @@ namespace RotmgPCap.Packets
             }
             catch
             {
-                return "Exception occurred while parsing packet structures:\n" + line;
+                return "Exception occurred while parsing proto:\n" + line;
             }
         }
 
@@ -124,7 +125,7 @@ namespace RotmgPCap.Packets
             Array.Copy(parsedTypes, 0, finalTypes, 1, parsedTypes.Length);
             finalTypes[0] = new PacketHeader().Instance();
 
-            manager.Structures.Add(id, new PacketStructure(name, id, finalTypes));
+            manager.PacketProtoDict.Add(id, new PacketProto(name, id, finalTypes));
             return true;
         }
 

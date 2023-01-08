@@ -15,7 +15,7 @@ namespace RotmgPCap.Forms
         private static readonly Color START_COLOR = Color.FromArgb(125, 233, 120);
         private static readonly Color STOP_COLOR = Color.FromArgb(249, 121, 121);
 
-        internal readonly Dictionary<ushort, Packet> Packets;
+        internal readonly List<Packet> Packets;
 
         internal readonly RotmgPCapCore RotmgPCap;
 
@@ -26,12 +26,10 @@ namespace RotmgPCap.Forms
         internal PacketCaptureForm(RotmgPCapCore rotmgPCap)
         {
             this.RotmgPCap = rotmgPCap;
-            Packets = new Dictionary<ushort, Packet>();
+            Packets = new List<Packet>();
             packetIdCounter = 0;
 
             InitializeComponent();
-
-            MaximizeBox = false;
         }
 
         // modes: 0 = Combined, 1 = Combined Sorted, 2 = Individual
@@ -46,7 +44,7 @@ namespace RotmgPCap.Forms
                 var packets = new List<byte[]>();
                 long totalLength = 0;
 
-                foreach (Packet packet in Packets.Values)
+                foreach (Packet packet in Packets)
                 {
                     byte[] export = packet.Data;
                     totalLength += export.Length;
@@ -65,22 +63,22 @@ namespace RotmgPCap.Forms
             }
             else if(mode == 1)
             {
-                var packets = new Dictionary<PacketStructure, List<byte[]>>();
+                var packets = new Dictionary<PacketProto, List<byte[]>>();
 
-                foreach (Packet packet in Packets.Values)
+                foreach (Packet packet in Packets)
                 {
                     byte[] export = packet.Data;
 
-                    if (packets.ContainsKey(packet.Structure))
-                        packets[packet.Structure].Add(export);
+                    if (packets.ContainsKey(packet.Proto))
+                        packets[packet.Proto].Add(export);
                     else
-                        packets.Add(packet.Structure, new List<byte[]>
+                        packets.Add(packet.Proto, new List<byte[]>
                         {
                             export
                         });
                 }
 
-                foreach(KeyValuePair<PacketStructure, List<byte[]>> pair in packets)
+                foreach(KeyValuePair<PacketProto, List<byte[]>> pair in packets)
                 {
                     int length = 0;
 
@@ -100,8 +98,8 @@ namespace RotmgPCap.Forms
             }
             else if(mode == 2)
             {
-                foreach (KeyValuePair<ushort, Packet> pair in Packets)
-                    result.Add(("Packet " + pair.Value.Structure.Name + " (" + pair.Key + ") " + timeString + ".bin", pair.Value.Data));
+                foreach (Packet packet in Packets)
+                    result.Add(("Packet " + packet.Proto.Name + " (" + packet.Proto.Name + ") " + timeString + ".bin", packet.Data));
             }
 
             return result;
@@ -113,8 +111,8 @@ namespace RotmgPCap.Forms
                 NetworkDeviceComboBox.Items.Add(device);
 
             PacketTypeComboBox.Items.Add("Unknown type");
-            foreach (PacketStructure structure in RotmgPCap.PacketManager.Structures.Values)
-                PacketTypeComboBox.Items.Add(structure.Name);
+            foreach (PacketProto proto in RotmgPCap.PacketManager.PacketProtoDict.Values)
+                PacketTypeComboBox.Items.Add(proto.Name);
 
             NetworkDeviceComboBox.SelectedIndex = 0;
             SocketTimeoutComboBox.SelectedIndex = 0;
@@ -187,8 +185,8 @@ namespace RotmgPCap.Forms
             ClearButton.Enabled = false;
             SessionButton.Enabled = false;
 
-            PacketListBox.Enabled = false;
-            PacketListBox.SelectedItem = null;
+            PacketListView.Enabled = false;
+            PacketListView.SelectedItems.Clear();
 
             packetsCaught = 0;
             PacketsCaughtValueLabel.Text = "0";
@@ -213,9 +211,9 @@ namespace RotmgPCap.Forms
             DirectionComboBox.Enabled = true;
             SessionButton.Enabled = true;
 
-            PacketListBox.Enabled = true;
+            PacketListView.Enabled = true;
 
-            if (PacketListBox.Items.Count > 0)
+            if (PacketListView.Items.Count > 0)
                 ClearButton.Enabled = true;
 
             IncomingSyncValueLabel.Text = "false";
@@ -255,18 +253,24 @@ namespace RotmgPCap.Forms
         internal void AddPacket(Packet packet) => Invoke(new OnPacket(OnPacket), packet);
         private void OnPacket(Packet packet)
         {
-            if (IngoreAckCheckBox.Checked && packet.Structure.Name.EndsWith("Ack"))
+            if (IngoreAckCheckBox.Checked && packet.Proto.Name.EndsWith("Ack"))
                 return;
 
             ushort id = packetIdCounter == ushort.MaxValue ? (packetIdCounter = default) : ++packetIdCounter;
 
-            string name = packet.FormatName();
-            name = name.Length > 14 ? name.Substring(0, 14) : name.PadRight(14, ' ');
+            ListViewItem lvi = new ListViewItem()
+            {
+                Text = id.ToString(),
+                Tag = packet
+            };
 
-            PacketListBox.Items.Add(id.ToString().PadLeft(5, '0') + " | " + packet.FormatTime().PadRight(8, ' ') + " | "
-                + packet.FormatDirection(false) + " | " + name + " | "  + packet.FormatData());
+            lvi.SubItems.Add(packet.FormatTime());
+            lvi.SubItems.Add(packet.FormatDirection(true));
+            lvi.SubItems.Add(packet.FormatNameId());
+            lvi.SubItems.Add(packet.FormatData());
 
-            Packets.Add(id, packet);
+            PacketListView.Items.Add(lvi);
+            Packets.Add(packet);
         }
 
         internal void AddressDetected(string address) => Invoke(new OnAddressDetected(OnAddressDetected), address);
@@ -307,30 +311,35 @@ namespace RotmgPCap.Forms
 
         private void AnalyzeButton_Click(object sender, EventArgs e)
         {
-            if (PacketListBox.SelectedItem != null)
-                if (ushort.TryParse(((string)PacketListBox.SelectedItem).Substring(0, 5), out ushort val))
-                    if (Packets.TryGetValue(val, out Packet packet))
-                        RotmgPCap.OpenPacketAnalyzer(packet);
-                    else
-                        MessageBox.Show("Packet not found", "RotmgPCap", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            Packet packet = null;
+
+            foreach (ListViewItem lvi in PacketListView.SelectedItems)
+            {
+                packet = lvi.Tag as Packet;
+                break;
+            }
+
+            if (packet != null)
+                RotmgPCap.OpenPacketAnalyzer(packet);
         }
 
         private void RemoveButton_Click(object sender, EventArgs e)
         {
-            if (PacketListBox.SelectedItem != null)
+            List<ListViewItem> toRemove = new List<ListViewItem>();
+            foreach (ListViewItem lvi in PacketListView.SelectedItems)
+                toRemove.Add(lvi);
+            foreach (ListViewItem lvi in toRemove)
             {
-                if (ushort.TryParse(((string)PacketListBox.SelectedItem).Substring(0, 5), out ushort val))
-                    Packets.Remove(val);
-
-                PacketListBox.Items.Remove(PacketListBox.SelectedItem);
-            }
+                PacketListView.Items.Remove(lvi);
+                Packets.Remove(lvi.Tag as Packet);
+            }    
 
             AnalyzeButton.Enabled = RemoveButton.Enabled = false;
         }
 
         private void ClearButton_Click(object sender, EventArgs e)
         {
-            PacketListBox.Items.Clear();
+            PacketListView.Items.Clear();
             Packets.Clear();
 
             AnalyzeButton.Enabled = RemoveButton.Enabled = ClearButton.Enabled = false;
@@ -341,11 +350,12 @@ namespace RotmgPCap.Forms
             if (active)
                 return;
 
-            SessionForm sessionForm = new SessionForm(this);
-            Enabled = false;
-            sessionForm.ShowDialog(this);
-            Enabled = true;
-            sessionForm.Dispose();
+            using (SessionForm sessionForm = new SessionForm(this))
+            {
+                Enabled = false;
+                sessionForm.ShowDialog(this);
+                Enabled = true;
+            }
         }
 
         private void AboutButton_Click(object sender, EventArgs e)
@@ -353,26 +363,30 @@ namespace RotmgPCap.Forms
             MessageBox.Show("A Realm of the Mad God packet capturing tool.\n\nVersion: " + RotmgPCapCore.VERSION + "\nBy Rappelr#2228", "RotmgPCap", MessageBoxButtons.OK, MessageBoxIcon.None);
         }
 
-        private void PacketListBox_SelectedIndexChanged(object sender, EventArgs e) => RemoveButton.Enabled = AnalyzeButton.Enabled = true;
+        private void PacketListView_SelectedIndexChanged(object sender, EventArgs e) => RemoveButton.Enabled = AnalyzeButton.Enabled = true;
 
-        private void PacketListBox_MouseDoubleClick(object sender, MouseEventArgs e)
+        private void PacketListView_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            if (PacketListBox.SelectedItem != null)
-                if (ushort.TryParse(((string)PacketListBox.SelectedItem).Substring(0, 5), out ushort val))
-                    if (Packets.TryGetValue(val, out Packet packet))
-                        RotmgPCap.OpenPacketAnalyzer(packet);
-                    else
-                        MessageBox.Show("Packet not found", "RotmgPCap", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            Packet packet = null;
 
-            PacketListBox_SelectedIndexChanged(sender, null);
+            foreach (ListViewItem lvi in PacketListView.SelectedItems)
+            {
+                packet = lvi.Tag as Packet;
+                break;
+            }
+
+            if (packet != null)
+                RotmgPCap.OpenPacketAnalyzer(packet);
+
+            PacketListView_SelectedIndexChanged(sender, null);
         }
 
-        private void PacketListBox_KeyPress(object sender, KeyPressEventArgs e)
+        private void PacketListView_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)Keys.Enter)
             {
                 e.Handled = true;
-                PacketListBox_MouseDoubleClick(sender, null);
+                PacketListView_MouseDoubleClick(sender, null);
             }
         }
 
@@ -408,8 +422,8 @@ namespace RotmgPCap.Forms
 
             if (PacketIdTextBox.Text.Length != 0)
                 if(byte.TryParse(PacketIdTextBox.Text, out byte id))
-                    if (RotmgPCap.PacketManager.Structures.TryGetValue(id, out PacketStructure structure))
-                        PacketTypeComboBox.SelectedItem = structure.Name;
+                    if (RotmgPCap.PacketManager.PacketProtoDict.TryGetValue(id, out PacketProto proto))
+                        PacketTypeComboBox.SelectedItem = proto.Name;
                     else
                         PacketTypeComboBox.SelectedIndex = 0;
                 else

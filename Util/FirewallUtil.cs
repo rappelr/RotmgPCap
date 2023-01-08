@@ -23,6 +23,7 @@ namespace RotmgPCap.Util
             }
             catch { }
 
+
             firewallPolicy.Rules.Add(firewallRule);
         }
     }

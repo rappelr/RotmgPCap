@@ -32,8 +32,8 @@ namespace RotmgPCap.Forms
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PacketAnalyzerForm));
             this.PacketTreeView = new System.Windows.Forms.TreeView();
             this.AlgorythmGroupBox = new System.Windows.Forms.GroupBox();
-            this.ReloadStructureFileButton = new System.Windows.Forms.Button();
-            this.OpenStructureFileButton = new System.Windows.Forms.Button();
+            this.ReloadProtoFileButton = new System.Windows.Forms.Button();
+            this.OpenProtoFileButton = new System.Windows.Forms.Button();
             this.RawValuePanel = new System.Windows.Forms.Panel();
             this.UtfLengthTextBox = new System.Windows.Forms.TextBox();
             this.UtfValueTextBox = new System.Windows.Forms.TextBox();
@@ -91,8 +91,8 @@ namespace RotmgPCap.Forms
             // AlgorythmGroupBox
             // 
             this.AlgorythmGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.AlgorythmGroupBox.Controls.Add(this.ReloadStructureFileButton);
-            this.AlgorythmGroupBox.Controls.Add(this.OpenStructureFileButton);
+            this.AlgorythmGroupBox.Controls.Add(this.ReloadProtoFileButton);
+            this.AlgorythmGroupBox.Controls.Add(this.OpenProtoFileButton);
             this.AlgorythmGroupBox.Location = new System.Drawing.Point(11, 550);
             this.AlgorythmGroupBox.Name = "AlgorythmGroupBox";
             this.AlgorythmGroupBox.Size = new System.Drawing.Size(169, 79);
@@ -100,25 +100,25 @@ namespace RotmgPCap.Forms
             this.AlgorythmGroupBox.TabStop = false;
             this.AlgorythmGroupBox.Text = "Analysis";
             // 
-            // ReloadStructureFileButton
+            // ReloadProtoFileButton
             // 
-            this.ReloadStructureFileButton.Location = new System.Drawing.Point(6, 48);
-            this.ReloadStructureFileButton.Name = "ReloadStructureFileButton";
-            this.ReloadStructureFileButton.Size = new System.Drawing.Size(156, 23);
-            this.ReloadStructureFileButton.TabIndex = 1;
-            this.ReloadStructureFileButton.Text = "Reload and parse structure";
-            this.ReloadStructureFileButton.UseVisualStyleBackColor = true;
-            this.ReloadStructureFileButton.Click += new System.EventHandler(this.ReloadStructureFileButton_Click);
+            this.ReloadProtoFileButton.Location = new System.Drawing.Point(6, 48);
+            this.ReloadProtoFileButton.Name = "ReloadProtoFileButton";
+            this.ReloadProtoFileButton.Size = new System.Drawing.Size(156, 23);
+            this.ReloadProtoFileButton.TabIndex = 1;
+            this.ReloadProtoFileButton.Text = "Refresh";
+            this.ReloadProtoFileButton.UseVisualStyleBackColor = true;
+            this.ReloadProtoFileButton.Click += new System.EventHandler(this.ReloadProtoFileButton_Click);
             // 
-            // OpenStructureFileButton
+            // OpenProtoFileButton
             // 
-            this.OpenStructureFileButton.Location = new System.Drawing.Point(7, 19);
-            this.OpenStructureFileButton.Name = "OpenStructureFileButton";
-            this.OpenStructureFileButton.Size = new System.Drawing.Size(156, 23);
-            this.OpenStructureFileButton.TabIndex = 0;
-            this.OpenStructureFileButton.Text = "Open structure file";
-            this.OpenStructureFileButton.UseVisualStyleBackColor = true;
-            this.OpenStructureFileButton.Click += new System.EventHandler(this.OpenStructureFileButton_Click);
+            this.OpenProtoFileButton.Location = new System.Drawing.Point(7, 19);
+            this.OpenProtoFileButton.Name = "OpenProtoFileButton";
+            this.OpenProtoFileButton.Size = new System.Drawing.Size(156, 23);
+            this.OpenProtoFileButton.TabIndex = 0;
+            this.OpenProtoFileButton.Text = "Open proto file";
+            this.OpenProtoFileButton.UseVisualStyleBackColor = true;
+            this.OpenProtoFileButton.Click += new System.EventHandler(this.OpenProtoFileButton_Click);
             // 
             // RawValuePanel
             // 
@@ -562,7 +562,7 @@ namespace RotmgPCap.Forms
         private System.Windows.Forms.TextBox CompressedValueTextBox;
         private System.Windows.Forms.Label FloatLabel;
         private System.Windows.Forms.TextBox BooleanValueTextBox;
-        private System.Windows.Forms.Button ReloadStructureFileButton;
-        private System.Windows.Forms.Button OpenStructureFileButton;
+        private System.Windows.Forms.Button ReloadProtoFileButton;
+        private System.Windows.Forms.Button OpenProtoFileButton;
     }
 }

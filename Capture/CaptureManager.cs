@@ -54,8 +54,8 @@ namespace RotmgPCap.Capture
                 CaptureDeviceList devices = CaptureDeviceList.Instance;
 
                 foreach (ICaptureDevice dev in devices)
-                    if(dev.FriendlyName != null)
-                        NetworkDevices.Add(dev.FriendlyName, dev);
+                    if(dev.Description != null)
+                        NetworkDevices.Add(dev.Description, dev);
 
                 return NetworkDevices.Count > 0;
             }
@@ -70,15 +70,15 @@ namespace RotmgPCap.Capture
 
         internal void CaptureSocketCatch(CapturePacket capturePacket)
         {
-            PacketStructure structure = rotmgPCap.PacketManager.GetOrCreate(capturePacket.Id);
+            PacketProto proto = rotmgPCap.PacketManager.GetOrCreate(capturePacket.Id);
             
-            if (structure.Id == 1)
+            if (proto.Id == 1)
             {
                 Crypto.Reset(false);
                 outSync = true;
                 rotmgPCap.SetSync(false);
             }
-            else if (structure.Id == 92)
+            else if (proto.Id == 92)
             {
                 Crypto.Reset(true);
                 inSync = true;
@@ -103,13 +103,13 @@ namespace RotmgPCap.Capture
             if (direction.HasValue && capturePacket.Incoming != direction.Value)
                 return;
 
-            if (filterPacket && (packetId.HasValue ? structure.Id != packetId.Value : !structure.Name.StartsWith("Unknown_")))
+            if (filterPacket && (packetId.HasValue ? proto.Id != packetId.Value : !proto.Name.StartsWith("Unknown_")))
                 return;
 
-            if (filterAck && structure.Name.EndsWith("Ack"))
+            if (filterAck && proto.Name.EndsWith("Ack"))
                 return;
 
-            rotmgPCap.AddPacket(new Packet(structure, capturePacket.Incoming, TimeUtil.CurrentUnix(), capturePacket.Data, true));
+            rotmgPCap.AddPacket(new Packet(proto, capturePacket.Incoming, TimeUtil.CurrentUnix(), capturePacket.Data, true));
         }
 
         internal void CaptureError(bool error)

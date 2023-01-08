@@ -1,5 +1,4 @@
-﻿using RotmgPCap.Packets.DataTypes;
-using RotmgPCap.Util;
+﻿using RotmgPCap.Util;
 using System;
 using System.Collections.Generic;
 
@@ -12,26 +11,27 @@ namespace RotmgPCap.Packets
         internal readonly byte[] Data;
         internal readonly bool Captured;
 
-        internal PacketStructure Structure { get; private set; }
+        internal PacketProto Proto { get; private set; }
 
         internal int Length => Data.Length - 5;
 
-        internal Packet(PacketStructure structure, bool? incoming, long time, byte[] data, bool captured)
+        internal Packet(PacketProto proto, bool? incoming, long time, byte[] data, bool captured)
         {
-            Structure = structure;
+            Proto = proto;
             Incoming = incoming;
             Time = time;
             Data = data;
             Captured = captured;
         }
 
-        internal string FormatName() => Structure.Name;
+        internal string FormatName() => Proto.Name;
+        internal string FormatNameId() => $"{Proto.Name} ({Proto.Id})";
         internal string FormatData() => Length + " bytes";
         internal string FormatTime(bool full = false) => Time == -1 ? "Unknown" : full ? TimeUtil.FormatFullUnix(Time) : TimeUtil.FormatShortUnix(Time);
         internal string FormatDirection(bool full = true) => full ? (Incoming.HasValue ? (Incoming.Value ? "Incoming" : "Outgoing") : "Unknown") :
             Incoming.HasValue ? (Incoming.Value ? "Inc" : "Out") : "Unk";
 
-        internal void ReapplyStructure(PacketManager manager) => Structure = manager.GetOrCreate(Structure.Id);
+        internal void ApplyProto(PacketManager manager) => Proto = manager.GetOrCreate(Proto.Id);
 
         internal static Packet[] Parse(PacketManager manager, byte[] data)
         {
@@ -54,9 +54,9 @@ namespace RotmgPCap.Packets
 
                 byte[] packetData = new byte[length];
                 Array.Copy(data, offset, packetData, 0, length);
-                PacketStructure structure = manager.GetOrCreate(data[offset + 4]);
+                PacketProto proto = manager.GetOrCreate(data[offset + 4]);
 
-                result.Add(new Packet(structure, null, -1, packetData, false));
+                result.Add(new Packet(proto, null, -1, packetData, false));
 
                 offset += length;
             }

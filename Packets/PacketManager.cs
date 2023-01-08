@@ -6,54 +6,54 @@ namespace RotmgPCap.Packets
 {
     internal class PacketManager
     {
-        internal Dictionary<byte, PacketStructure> Structures;
+        internal Dictionary<byte, PacketProto> PacketProtoDict;
 
         internal PacketReaderProfile Profile;
 
         internal PacketManager()
         {
-            Structures = new Dictionary<byte, PacketStructure>();
+            PacketProtoDict = new Dictionary<byte, PacketProto>();
         }
 
-        internal PacketStructure GetOrCreate(byte id)
+        internal PacketProto GetOrCreate(byte id)
         {
-            if (!Structures.TryGetValue(id, out PacketStructure structure))
+            if (!PacketProtoDict.TryGetValue(id, out PacketProto proto))
             {
-                structure = new PacketStructure("Unknown_" + id, id, new TypeInstance[] {
+                proto = new PacketProto("Unknown_" + id, id, new TypeInstance[] {
                         new PacketHeader().Instance(),
                         new TypeInstance(new AVoid(), "Auto generated")
                     });
 
-                Structures.Add(id, structure);
+                PacketProtoDict.Add(id, proto);
             }
 
-            return structure;
+            return proto;
         }
 
         internal TypeInstance[] Read(Packet packet)
         {
             PacketReader reader = PacketReader.Create(Profile, packet);
 
-            foreach (TypeInstance type in packet.Structure.Types)
+            foreach (TypeInstance type in packet.Proto.Types)
                 if (!reader.Read(type))
                     break;
 
-            return packet.Structure.Types;
+            return packet.Proto.Types;
         }
 
-        internal PacketStructure ByName(string name)
+        internal PacketProto ByName(string name)
         {
-            foreach (PacketStructure structure in Structures.Values)
-                if (structure.Name == name)
-                    return structure;
+            foreach (PacketProto proto in PacketProtoDict.Values)
+                if (proto.Name == name)
+                    return proto;
             return null;
         }
 
-        internal string LoadStructures()
+        internal string LoadProto()
         {
-            Structures = new Dictionary<byte, PacketStructure>();
+            PacketProtoDict = new Dictionary<byte, PacketProto>();
 
-            return new PacketStructureFileParser(this).ParsePacketStructureFile();
+            return new ProtoFileParser(this).Parse();
         }
     }
 }

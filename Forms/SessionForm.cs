@@ -42,16 +42,16 @@ namespace RotmgPCap.Forms
             int imported = 0;
             int types = 0;
 
-            foreach(Packet packet in captureForm.Packets.Values)
+            foreach(Packet packet in captureForm.Packets)
             {
                 if (packet.Captured)
                     captured++;
                 else
                     imported++;
 
-                if(!foundTypes.Contains(packet.Structure.Id))
+                if(!foundTypes.Contains(packet.Proto.Id))
                 {
-                    foundTypes.Add(packet.Structure.Id);
+                    foundTypes.Add(packet.Proto.Id);
                     types++;
                 }
             }

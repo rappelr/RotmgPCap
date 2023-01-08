@@ -2,6 +2,7 @@
 using RotmgPCap.Packets;
 using RotmgPCap.Packets.DataTypes;
 using RotmgPCap.Packets.DataTypes.Primitive;
+using RotmgPCap.Properties;
 using System;
 using System.Diagnostics;
 using System.Drawing;
@@ -92,14 +93,14 @@ namespace RotmgPCap.Forms
             UpdatePointerInfo(0, 0, 0);
             BinaryView.Select(SelectionType.NOTHING, 0, 0);
 
-            foreach (TypeInstance type in packet.Structure.Types)
+            foreach (TypeInstance type in packet.Proto.Types)
                 PacketTreeView.Nodes.Add(new PacketObjectNode(type));
         }
 
         private void DoOnFinishReloading()
         {
-            MessageBox.Show("Parsed " + rotmgPCap.PacketManager.Structures.Count + " packet structures.",
-                    "Structure file reloaded", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("Parsed " + rotmgPCap.PacketManager.PacketProtoDict.Count + " packet structures.",
+                    "Proto file reloaded", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private (SelectionType type, int startIndex, int length) OnBinaryViewerSelect(int index)
@@ -274,34 +275,34 @@ namespace RotmgPCap.Forms
             }
         }
 
-        private void OpenStructureFileButton_Click(object sender, EventArgs e)
+        private void OpenProtoFileButton_Click(object sender, EventArgs e)
         {
             try
             {
-                Process.Start("notepad.exe", Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\PacketStructures.txt");
+                Process.Start("notepad.exe", Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\" + Resources.ProtoFilePath);
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Failed to open structure file", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Failed to open proto file", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private void ReloadStructureFileButton_Click(object sender, EventArgs e)
+        private void ReloadProtoFileButton_Click(object sender, EventArgs e)
         {
             try
             {
-                string result = rotmgPCap.HotReloadStructures();
+                string result = rotmgPCap.HotReloadProto();
 
                 if(result != null)
                     throw new Exception(result);
 
-                packet.ReapplyStructure(rotmgPCap.PacketManager);
+                packet.ApplyProto(rotmgPCap.PacketManager);
 
                 ReadPacket().ContinueWith((r) => Invoke(new OnFinishReloading(DoOnFinishReloading)));
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Failed to reload structure file", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Failed to reload proto file", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

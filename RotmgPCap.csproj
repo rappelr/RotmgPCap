@@ -30,8 +30,8 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugSymbols>false</DebugSymbols>
-    <DebugType>none</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -129,8 +129,8 @@
     <Compile Include="Packets\PacketManager.cs" />
     <Compile Include="Packets\PacketReader.cs" />
     <Compile Include="Packets\PacketReaderProfile.cs" />
-    <Compile Include="Packets\PacketStructure.cs" />
-    <Compile Include="Packets\PacketStructureFileParser.cs" />
+    <Compile Include="Packets\PacketProto.cs" />
+    <Compile Include="Packets\ProtoFileParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RotmgPCapCore.cs" />
     <Compile Include="Util\FirewallUtil.cs" />
@@ -189,19 +189,9 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="PacketStructures.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <Content Include="Resources\proto.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\PacketDotNet\PacketDotNet\PacketDotNet.csproj">
-      <Project>{55abba4c-aaf9-4726-a592-0c92436cec92}</Project>
-      <Name>PacketDotNet</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SharpPCap\SharpPcap\SharpPcap.csproj">
-      <Project>{24262e52-1304-4a25-8f73-a3b06e40592e}</Project>
-      <Name>SharpPcap</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
@@ -214,6 +204,14 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="PacketDotNet">
+      <Version>1.4.7</Version>
+    </PackageReference>
+    <PackageReference Include="SharpPcap">
+      <Version>6.2.5</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

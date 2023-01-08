@@ -2,18 +2,16 @@
 using RotmgPCap.Forms;
 using RotmgPCap.Packets;
 using RotmgPCap.Util;
-using SharpPcap;
 using System;
-using System.Net;
+using System.Reflection;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace RotmgPCap
 {
     internal class RotmgPCapCore
     {
-        internal const string VERSION = "v1.0.2.0";
+        internal static string VERSION = Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
         internal readonly CaptureManager CaptureManager;
         internal readonly PacketManager PacketManager;
@@ -40,9 +38,9 @@ namespace RotmgPCap
         {
             launcherForm.Update("Loading...", 0);
 
-            launcherForm.Update("Loading packet structures...", 10);
+            launcherForm.Update("Loading proto...", 10);
 
-            string result = PacketManager.LoadStructures();
+            string result = PacketManager.LoadProto();
 
             if (result != null)
             {
@@ -67,8 +65,8 @@ namespace RotmgPCap
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                launcherForm.Finish("Failed to create firewall rule.\nMake sure you launched the application evelated.");
-                return;
+                //launcherForm.Finish("Failed to create firewall rule.\nMake sure you launched the application evelated.");
+                //return;
             }
 
             launcherForm.Update("Finishing up", 100);
@@ -76,13 +74,13 @@ namespace RotmgPCap
             launcherForm.Finish(null);
         }
 
-        internal string HotReloadStructures()
+        internal string HotReloadProto()
         {
-            string result = PacketManager.LoadStructures();
+            string result = PacketManager.LoadProto();
 
             if (result == null)
-                foreach (Packet packet in captureForm.Packets.Values)
-                    packet.ReapplyStructure(PacketManager);
+                foreach (Packet packet in captureForm.Packets)
+                    packet.ApplyProto(PacketManager);
 
             return result;
         }

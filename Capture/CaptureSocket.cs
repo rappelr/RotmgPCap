@@ -50,9 +50,9 @@ namespace RotmgPCap.Capture
                 device.OnPacketArrival += arrivalEventHandler;
 
                 if(timeout.HasValue)
-                    device.Open(DeviceMode.Promiscuous, timeout.Value);
+                    device.Open(DeviceModes.Promiscuous, timeout.Value);
                 else
-                    device.Open(DeviceMode.Promiscuous);
+                    device.Open(DeviceModes.Promiscuous);
 
                 device.Filter = "ip and tcp";
                 device.StartCapture();
@@ -88,11 +88,11 @@ namespace RotmgPCap.Capture
             active = false;
         }
 
-        private static void OnPacketArrival(object sender, CaptureEventArgs e)
+        private static void OnPacketArrival(object sender, PacketCapture e)
         {
             lock (queueLock)
             {
-                packetQueue.Add(e.Packet);
+                packetQueue.Add(e.GetPacket());
             }
         }
 
@@ -137,8 +137,8 @@ namespace RotmgPCap.Capture
         {
             try
             {
-                var ip = (IpPacket)rawPacket.Extract(typeof(IpPacket));
-                var tcp = (TcpPacket)rawPacket.Extract(typeof(TcpPacket));
+                var ip = rawPacket.Extract<IPPacket>();
+                var tcp = rawPacket.Extract<TcpPacket>();
 
                 if (ip != null && tcp != null && (tcp.SourcePort == port || tcp.DestinationPort == port) && tcp.PayloadData != null)
                     ParsePacketData(ip, tcp, tcp.SourcePort == port);
@@ -150,7 +150,7 @@ namespace RotmgPCap.Capture
             }
         }
 
-        private static void ParsePacketData(IpPacket ip, TcpPacket tcp, bool incoming)
+        private static void ParsePacketData(IPPacket ip, TcpPacket tcp, bool incoming)
         {
             CapturePacket targetPacket = incoming ? incomingPacket : outgoingPacket;
 
