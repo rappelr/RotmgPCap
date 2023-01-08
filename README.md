@@ -1,7 +1,9 @@
 # RotmgPCap
-Captures [Realm of the Mad God](https://www.realmofthemadgod.com/) network traffic and offers analysis tools.
+Captures [Realm of the Mad God](https://www.realmofthemadgod.com/) network traffic and offers binary analysis tools.
 
-Tutorial:
+![Join our Discord](https://i.imgur.com/OyBrOV9.png)
+
+# Tutorial
 RotmgPCap works on windows only and requires you to install [WinPCap](https://www.winpcap.org/install/).
 You might have to restart your machine before continuing.
 
@@ -24,3 +26,4 @@ Back in the packet capture window you can save, or load previous sessions, by cl
 In the 'Resources' directory there should be a file named proto.txt.
 This file describes the data structures of the packets.
 You may edit this if you like. A more in depth explanation can be found there.
+
