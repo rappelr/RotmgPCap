@@ -4,7 +4,10 @@ Captures [Realm of the Mad God](https://www.realmofthemadgod.com/) network traff
 ![Join our Discord](https://i.imgur.com/OyBrOV9.png)
 
 # Tutorial
-RotmgPCap works on windows only and requires you to install [WinPCap](https://www.winpcap.org/install/).
+RotmgPCap works on windows only and requires you to install:
+- [.NET Framework 4.7.2+](https://dotnet.microsoft.com/en-us/download/dotnet) Should come preinstalled w/ Windows 10 since April 2018 otherwise look for .NET desktop runtime.
+- [WinPCap](https://www.winpcap.org/install/).
+
 You might have to restart your machine before continuing.
 
 When you're all set up you can launch the executable.
@@ -20,10 +23,10 @@ Once you have captured the packets you're looking for you can stop the process.
 Try selecting one and clicking "Analyze" (or double click it) and it will open up the packet analyzer tool.
 Here it will display the binary data and a tree view of all its parsed components.
 Both of which can be interacted with to display the correlation between them.
-For quick debugging of the proto file you can open it and reload it via the buttons in the bottom left of the window.
-Back in the packet capture window you can save, or load previous sessions, by clicking on the "Session" button.
+In the packet capture window you can save, or load previous sessions, by clicking on the "Session" button.
 
 In the 'Resources' directory there should be a file named proto.txt.
 This file describes the data structures of the packets.
 You may edit this if you like. A more in depth explanation can be found there.
+It can also be accessed and refreshed from the Analyze window.
 
