@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -40,7 +42,13 @@ namespace RotmgPCap.Forms
             progressBar.Value = progressBarValue;
         }
 
-        private void LauncherForm_Load(object sender, EventArgs e) => (launchThread = new Thread(() => Launch())).Start();
+        private void LauncherForm_Load(object sender, EventArgs e)
+        {
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            FileVersionInfo versionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
+            versionLabel.Text = versionInfo.ProductVersion;
+            (launchThread = new Thread(() => Launch())).Start();
+        }
 
         private void LauncherForm_FormClosing(object sender, FormClosingEventArgs e)
         {

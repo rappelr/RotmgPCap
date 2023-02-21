@@ -15,7 +15,7 @@ namespace RotmgPCap.Forms.Components
             ObjectName = typeInstance.Name;
             Type = typeInstance.Type.Name;
 
-            Text = ObjectName;
+            Text = $"<{ObjectName}>";
 
             if (typeInstance.Type is AVoid)
                 ForeColor = System.Drawing.Color.Gray;
@@ -31,10 +31,19 @@ namespace RotmgPCap.Forms.Components
             DataIndex = typeInstance.Result.StreamPosition;
             Length = typeInstance.Result.BytesRead;
             Failure = typeInstance.Result.Error;
-
+            Header = typeInstance.Type.Name == "PacketHeader";
             Container = typeInstance.Result.RawValue is TypeInstance[];
-            Header = typeInstance.Type.Name == "PacketHeader"; //fuck you
-            Value = Container ? "Object list" : Failure ? typeInstance.Result.ErrorMessage : typeInstance.Result.StringValue;
+
+            if (Container)
+            {
+                TypeInstance[] subTypes = (TypeInstance[])typeInstance.Result.RawValue;
+                Value = $"Object list, item count: {subTypes.Length}";
+            }
+            else
+            {
+                Value = Failure ? typeInstance.Result.ErrorMessage : typeInstance.Result.StringValue;
+                Text = $"{ObjectName}: {Value}";
+            }
 
             if (Failure)
                 ForeColor = System.Drawing.Color.Red;

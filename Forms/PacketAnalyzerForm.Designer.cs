@@ -83,7 +83,7 @@ namespace RotmgPCap.Forms
             | System.Windows.Forms.AnchorStyles.Left)));
             this.PacketTreeView.Location = new System.Drawing.Point(12, 89);
             this.PacketTreeView.Name = "PacketTreeView";
-            this.PacketTreeView.Size = new System.Drawing.Size(168, 382);
+            this.PacketTreeView.Size = new System.Drawing.Size(232, 520);
             this.PacketTreeView.TabIndex = 2;
             this.PacketTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.PacketTreeView_AfterSelect);
             this.PacketTreeView.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OnKeyPress);
@@ -93,18 +93,18 @@ namespace RotmgPCap.Forms
             this.AlgorythmGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.AlgorythmGroupBox.Controls.Add(this.ReloadProtoFileButton);
             this.AlgorythmGroupBox.Controls.Add(this.OpenProtoFileButton);
-            this.AlgorythmGroupBox.Location = new System.Drawing.Point(11, 550);
+            this.AlgorythmGroupBox.Location = new System.Drawing.Point(11, 712);
             this.AlgorythmGroupBox.Name = "AlgorythmGroupBox";
-            this.AlgorythmGroupBox.Size = new System.Drawing.Size(169, 79);
+            this.AlgorythmGroupBox.Size = new System.Drawing.Size(233, 55);
             this.AlgorythmGroupBox.TabIndex = 0;
             this.AlgorythmGroupBox.TabStop = false;
             this.AlgorythmGroupBox.Text = "Analysis";
             // 
             // ReloadProtoFileButton
             // 
-            this.ReloadProtoFileButton.Location = new System.Drawing.Point(6, 48);
+            this.ReloadProtoFileButton.Location = new System.Drawing.Point(6, 19);
             this.ReloadProtoFileButton.Name = "ReloadProtoFileButton";
-            this.ReloadProtoFileButton.Size = new System.Drawing.Size(156, 23);
+            this.ReloadProtoFileButton.Size = new System.Drawing.Size(78, 23);
             this.ReloadProtoFileButton.TabIndex = 1;
             this.ReloadProtoFileButton.Text = "Refresh";
             this.ReloadProtoFileButton.UseVisualStyleBackColor = true;
@@ -112,9 +112,9 @@ namespace RotmgPCap.Forms
             // 
             // OpenProtoFileButton
             // 
-            this.OpenProtoFileButton.Location = new System.Drawing.Point(7, 19);
+            this.OpenProtoFileButton.Location = new System.Drawing.Point(90, 19);
             this.OpenProtoFileButton.Name = "OpenProtoFileButton";
-            this.OpenProtoFileButton.Size = new System.Drawing.Size(156, 23);
+            this.OpenProtoFileButton.Size = new System.Drawing.Size(78, 23);
             this.OpenProtoFileButton.TabIndex = 0;
             this.OpenProtoFileButton.Text = "Open proto file";
             this.OpenProtoFileButton.UseVisualStyleBackColor = true;
@@ -122,8 +122,6 @@ namespace RotmgPCap.Forms
             // 
             // RawValuePanel
             // 
-            this.RawValuePanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.RawValuePanel.BackColor = System.Drawing.SystemColors.Window;
             this.RawValuePanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.RawValuePanel.Controls.Add(this.UtfLengthTextBox);
@@ -148,7 +146,7 @@ namespace RotmgPCap.Forms
             this.RawValuePanel.Controls.Add(this.SByteValueTextBox);
             this.RawValuePanel.Controls.Add(this.ByteLabel);
             this.RawValuePanel.Controls.Add(this.SByteLabel);
-            this.RawValuePanel.Location = new System.Drawing.Point(186, 12);
+            this.RawValuePanel.Location = new System.Drawing.Point(250, 12);
             this.RawValuePanel.Name = "RawValuePanel";
             this.RawValuePanel.Size = new System.Drawing.Size(576, 47);
             this.RawValuePanel.TabIndex = 4;
@@ -354,7 +352,7 @@ namespace RotmgPCap.Forms
             this.PacketDataView.Controls.Add(this.PacketTypeLabel);
             this.PacketDataView.Location = new System.Drawing.Point(12, 12);
             this.PacketDataView.Name = "PacketDataView";
-            this.PacketDataView.Size = new System.Drawing.Size(168, 71);
+            this.PacketDataView.Size = new System.Drawing.Size(232, 71);
             this.PacketDataView.TabIndex = 7;
             // 
             // PacketTimeValueLabel
@@ -433,7 +431,7 @@ namespace RotmgPCap.Forms
             // 
             this.ObjectValueLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.ObjectValueLabel.AutoSize = true;
-            this.ObjectValueLabel.Location = new System.Drawing.Point(9, 474);
+            this.ObjectValueLabel.Location = new System.Drawing.Point(9, 612);
             this.ObjectValueLabel.Name = "ObjectValueLabel";
             this.ObjectValueLabel.Size = new System.Drawing.Size(49, 13);
             this.ObjectValueLabel.TabIndex = 9;
@@ -444,12 +442,12 @@ namespace RotmgPCap.Forms
             this.ObjectValueTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.ObjectValueTextBox.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.ObjectValueTextBox.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ObjectValueTextBox.Location = new System.Drawing.Point(12, 490);
+            this.ObjectValueTextBox.Location = new System.Drawing.Point(12, 628);
             this.ObjectValueTextBox.Multiline = true;
             this.ObjectValueTextBox.Name = "ObjectValueTextBox";
             this.ObjectValueTextBox.ReadOnly = true;
             this.ObjectValueTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.ObjectValueTextBox.Size = new System.Drawing.Size(168, 54);
+            this.ObjectValueTextBox.Size = new System.Drawing.Size(232, 78);
             this.ObjectValueTextBox.TabIndex = 10;
             // 
             // SelectionDetails
@@ -458,7 +456,7 @@ namespace RotmgPCap.Forms
             this.SelectionDetails.AutoSize = true;
             this.SelectionDetails.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SelectionDetails.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.SelectionDetails.Location = new System.Drawing.Point(239, 620);
+            this.SelectionDetails.Location = new System.Drawing.Point(250, 758);
             this.SelectionDetails.Name = "SelectionDetails";
             this.SelectionDetails.Size = new System.Drawing.Size(14, 15);
             this.SelectionDetails.TabIndex = 11;
@@ -466,11 +464,11 @@ namespace RotmgPCap.Forms
             // 
             // HexModeCheckBox
             // 
-            this.HexModeCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.HexModeCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.HexModeCheckBox.AutoSize = true;
             this.HexModeCheckBox.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.HexModeCheckBox.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.HexModeCheckBox.Location = new System.Drawing.Point(186, 619);
+            this.HexModeCheckBox.Location = new System.Drawing.Point(779, 757);
             this.HexModeCheckBox.Name = "HexModeCheckBox";
             this.HexModeCheckBox.Size = new System.Drawing.Size(47, 19);
             this.HexModeCheckBox.TabIndex = 0;
@@ -484,9 +482,9 @@ namespace RotmgPCap.Forms
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.BinaryView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.BinaryView.Location = new System.Drawing.Point(186, 65);
+            this.BinaryView.Location = new System.Drawing.Point(250, 65);
             this.BinaryView.Name = "BinaryView";
-            this.BinaryView.Size = new System.Drawing.Size(576, 551);
+            this.BinaryView.Size = new System.Drawing.Size(576, 689);
             this.BinaryView.TabIndex = 8;
             this.BinaryView.TabStop = false;
             // 
@@ -494,7 +492,7 @@ namespace RotmgPCap.Forms
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(774, 641);
+            this.ClientSize = new System.Drawing.Size(838, 779);
             this.Controls.Add(this.HexModeCheckBox);
             this.Controls.Add(this.SelectionDetails);
             this.Controls.Add(this.ObjectValueTextBox);
@@ -505,7 +503,7 @@ namespace RotmgPCap.Forms
             this.Controls.Add(this.AlgorythmGroupBox);
             this.Controls.Add(this.PacketTreeView);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(790, 480);
+            this.MinimumSize = new System.Drawing.Size(854, 480);
             this.Name = "PacketAnalyzerForm";
             this.Text = "RotmgPCap - Packet Analyzer";
             this.Load += new System.EventHandler(this.PacketAnalyzerForm_Load);

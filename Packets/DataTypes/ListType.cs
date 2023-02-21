@@ -5,13 +5,11 @@ namespace RotmgPCap.Packets.DataTypes
 {
     internal class ListType : DataType
     {
-        internal readonly string Name;
         internal readonly Reference LengthReference;
         internal readonly DataType Type;
 
-        internal ListType(string name, Reference lengthReference, DataType type) : base("List", 0, false)
+        internal ListType(string name, Reference lengthReference, DataType type) : base(name, 0, false)
         {
-            Name = name;
             LengthReference = lengthReference;
             Type = type;
         }
@@ -37,7 +35,7 @@ namespace RotmgPCap.Packets.DataTypes
 
                 for (int i = 0; i < length; i++)
                 {
-                    TypeInstance current = Type.Instance(Name + "_" + i);
+                    TypeInstance current = Type.Instance($"{Name} [{i}]");
 
                     bool success = reader.Read(current);
                     cResult[i] = current;

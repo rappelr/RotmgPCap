@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("RotmgPCap")]
-[assembly: AssemblyDescription("A ROTMG packet capturing tool")]
+[assembly: AssemblyDescription("A Realm of the Mad God packet capturing tool")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Rappelr#2228")]
 [assembly: AssemblyProduct("RotmgPCap")]
@@ -33,6 +33,6 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.1.0.0")]
-[assembly: AssemblyFileVersion("1.1.0.0")]
+[assembly: AssemblyVersion("1.2.0.0")]
+[assembly: AssemblyFileVersion("1.2.0.0")]
 [assembly: NeutralResourcesLanguage("en-001")]

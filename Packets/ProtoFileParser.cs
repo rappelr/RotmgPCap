@@ -274,7 +274,7 @@ namespace RotmgPCap.Packets
                         return null;
 
                     if (VerifyName(name))
-                        return new TypeInstance(new ListType(name, reference, foundRepeatType), name + "_List");
+                        return new TypeInstance(new ListType(name, reference, foundRepeatType), name + " List");
 
                     return null;
                 }

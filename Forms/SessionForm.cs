@@ -131,6 +131,7 @@ namespace RotmgPCap.Forms
 
         private void ImportButton_Click(object sender, EventArgs e)
         {
+            ImportFileDialog.InitialDirectory = exportPath;
             if (ImportFileDialog.ShowDialog() == DialogResult.OK)
             {
                 string[] files = new string[0];

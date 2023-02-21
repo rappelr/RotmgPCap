@@ -52,6 +52,9 @@ namespace RotmgPCap.Forms
             // 
             // SessionDetailsPanel
             // 
+            this.SessionDetailsPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.SessionDetailsPanel.BackColor = System.Drawing.SystemColors.Window;
             this.SessionDetailsPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.SessionDetailsPanel.Controls.Add(this.TypesValueLabel);
@@ -64,7 +67,7 @@ namespace RotmgPCap.Forms
             this.SessionDetailsPanel.Controls.Add(this.PacketCountLabel);
             this.SessionDetailsPanel.Location = new System.Drawing.Point(12, 12);
             this.SessionDetailsPanel.Name = "SessionDetailsPanel";
-            this.SessionDetailsPanel.Size = new System.Drawing.Size(147, 95);
+            this.SessionDetailsPanel.Size = new System.Drawing.Size(193, 113);
             this.SessionDetailsPanel.TabIndex = 0;
             // 
             // TypesValueLabel
@@ -140,7 +143,8 @@ namespace RotmgPCap.Forms
             // 
             // ExportButton
             // 
-            this.ExportButton.Location = new System.Drawing.Point(167, 84);
+            this.ExportButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.ExportButton.Location = new System.Drawing.Point(213, 84);
             this.ExportButton.Name = "ExportButton";
             this.ExportButton.Size = new System.Drawing.Size(116, 23);
             this.ExportButton.TabIndex = 1;
@@ -150,7 +154,8 @@ namespace RotmgPCap.Forms
             // 
             // ImportButton
             // 
-            this.ImportButton.Location = new System.Drawing.Point(165, 12);
+            this.ImportButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.ImportButton.Location = new System.Drawing.Point(211, 12);
             this.ImportButton.Name = "ImportButton";
             this.ImportButton.Size = new System.Drawing.Size(116, 23);
             this.ImportButton.TabIndex = 2;
@@ -160,8 +165,9 @@ namespace RotmgPCap.Forms
             // 
             // ExportModeLabel
             // 
+            this.ExportModeLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.ExportModeLabel.AutoSize = true;
-            this.ExportModeLabel.Location = new System.Drawing.Point(164, 41);
+            this.ExportModeLabel.Location = new System.Drawing.Point(210, 41);
             this.ExportModeLabel.Name = "ExportModeLabel";
             this.ExportModeLabel.Size = new System.Drawing.Size(69, 13);
             this.ExportModeLabel.TabIndex = 4;
@@ -169,27 +175,31 @@ namespace RotmgPCap.Forms
             // 
             // ExportModeComboBox
             // 
+            this.ExportModeComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.ExportModeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ExportModeComboBox.FormattingEnabled = true;
             this.ExportModeComboBox.Items.AddRange(new object[] {
             "Combined",
             "Sorted combined",
             "Individual"});
-            this.ExportModeComboBox.Location = new System.Drawing.Point(167, 57);
+            this.ExportModeComboBox.Location = new System.Drawing.Point(213, 57);
             this.ExportModeComboBox.Name = "ExportModeComboBox";
             this.ExportModeComboBox.Size = new System.Drawing.Size(116, 21);
             this.ExportModeComboBox.TabIndex = 5;
             // 
             // PathTextBox
             // 
-            this.PathTextBox.Location = new System.Drawing.Point(12, 115);
+            this.PathTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.PathTextBox.Location = new System.Drawing.Point(12, 133);
             this.PathTextBox.Name = "PathTextBox";
-            this.PathTextBox.Size = new System.Drawing.Size(239, 20);
+            this.PathTextBox.Size = new System.Drawing.Size(285, 20);
             this.PathTextBox.TabIndex = 7;
             // 
             // PathPickButton
             // 
-            this.PathPickButton.Location = new System.Drawing.Point(257, 113);
+            this.PathPickButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.PathPickButton.Location = new System.Drawing.Point(303, 131);
             this.PathPickButton.Name = "PathPickButton";
             this.PathPickButton.Size = new System.Drawing.Size(25, 23);
             this.PathPickButton.TabIndex = 8;
@@ -207,7 +217,7 @@ namespace RotmgPCap.Forms
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(294, 147);
+            this.ClientSize = new System.Drawing.Size(340, 165);
             this.Controls.Add(this.PathPickButton);
             this.Controls.Add(this.PathTextBox);
             this.Controls.Add(this.ExportModeComboBox);
@@ -215,9 +225,7 @@ namespace RotmgPCap.Forms
             this.Controls.Add(this.ImportButton);
             this.Controls.Add(this.ExportButton);
             this.Controls.Add(this.SessionDetailsPanel);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximumSize = new System.Drawing.Size(310, 186);
             this.MinimumSize = new System.Drawing.Size(310, 186);
             this.Name = "SessionForm";
             this.Text = "RotmgPCap - Session";

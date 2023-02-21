@@ -52,6 +52,7 @@ namespace RotmgPCap.Forms
         {
             BinaryView.SetData(packet.Data);
 
+            Text = $"RotmgPCap - Analyzer: {packet.FormatNameId()}";
             PacketTypeValueLabel.Text = packet.FormatName();
             PacketDirectionValueLabel.Text = packet.FormatDirection();
             PacketSizeValueLabel.Text = packet.FormatData();

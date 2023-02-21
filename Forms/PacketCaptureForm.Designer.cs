@@ -68,6 +68,7 @@ namespace RotmgPCap.Forms
             this.PDirectionColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.PNameColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.PDataColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.PacketIdLabel = new System.Windows.Forms.Label();
             this.FilterGroupBox.SuspendLayout();
             this.ControlGroupBox.SuspendLayout();
             this.HeaderPanel.SuspendLayout();
@@ -115,7 +116,7 @@ namespace RotmgPCap.Forms
             "5",
             "10",
             "30"});
-            this.SocketTimeoutComboBox.Location = new System.Drawing.Point(558, 8);
+            this.SocketTimeoutComboBox.Location = new System.Drawing.Point(538, 8);
             this.SocketTimeoutComboBox.Name = "SocketTimeoutComboBox";
             this.SocketTimeoutComboBox.Size = new System.Drawing.Size(80, 21);
             this.SocketTimeoutComboBox.TabIndex = 5;
@@ -124,7 +125,7 @@ namespace RotmgPCap.Forms
             // 
             this.SocketTimeoutLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.SocketTimeoutLabel.AutoSize = true;
-            this.SocketTimeoutLabel.Location = new System.Drawing.Point(448, 11);
+            this.SocketTimeoutLabel.Location = new System.Drawing.Point(428, 11);
             this.SocketTimeoutLabel.Name = "SocketTimeoutLabel";
             this.SocketTimeoutLabel.Size = new System.Drawing.Size(104, 13);
             this.SocketTimeoutLabel.TabIndex = 4;
@@ -134,7 +135,7 @@ namespace RotmgPCap.Forms
             // 
             this.PortLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.PortLabel.AutoSize = true;
-            this.PortLabel.Location = new System.Drawing.Point(374, 11);
+            this.PortLabel.Location = new System.Drawing.Point(354, 11);
             this.PortLabel.Name = "PortLabel";
             this.PortLabel.Size = new System.Drawing.Size(29, 13);
             this.PortLabel.TabIndex = 2;
@@ -148,7 +149,7 @@ namespace RotmgPCap.Forms
             this.NetworkDeviceComboBox.FormattingEnabled = true;
             this.NetworkDeviceComboBox.Location = new System.Drawing.Point(103, 8);
             this.NetworkDeviceComboBox.Name = "NetworkDeviceComboBox";
-            this.NetworkDeviceComboBox.Size = new System.Drawing.Size(265, 21);
+            this.NetworkDeviceComboBox.Size = new System.Drawing.Size(245, 21);
             this.NetworkDeviceComboBox.TabIndex = 1;
             // 
             // NetworkDeviceLabel
@@ -162,6 +163,7 @@ namespace RotmgPCap.Forms
             // 
             // FilterGroupBox
             // 
+            this.FilterGroupBox.Controls.Add(this.PacketIdLabel);
             this.FilterGroupBox.Controls.Add(this.DirectionComboBox);
             this.FilterGroupBox.Controls.Add(this.DirectionLabel);
             this.FilterGroupBox.Controls.Add(this.PacketIdTextBox);
@@ -174,7 +176,7 @@ namespace RotmgPCap.Forms
             this.FilterGroupBox.Size = new System.Drawing.Size(163, 188);
             this.FilterGroupBox.TabIndex = 1;
             this.FilterGroupBox.TabStop = false;
-            this.FilterGroupBox.Text = "Filter";
+            this.FilterGroupBox.Text = "Packet filter";
             // 
             // DirectionComboBox
             // 
@@ -205,10 +207,10 @@ namespace RotmgPCap.Forms
             this.PacketIdTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.PacketIdTextBox.Enabled = false;
-            this.PacketIdTextBox.Location = new System.Drawing.Point(10, 114);
+            this.PacketIdTextBox.Location = new System.Drawing.Point(33, 114);
             this.PacketIdTextBox.MaxLength = 3;
             this.PacketIdTextBox.Name = "PacketIdTextBox";
-            this.PacketIdTextBox.Size = new System.Drawing.Size(147, 20);
+            this.PacketIdTextBox.Size = new System.Drawing.Size(124, 20);
             this.PacketIdTextBox.TabIndex = 10;
             this.PacketIdTextBox.Text = "0";
             this.PacketIdTextBox.TextChanged += new System.EventHandler(this.PacketIdTextBox_TextChanged);
@@ -304,6 +306,8 @@ namespace RotmgPCap.Forms
             // 
             // ControlGroupBox
             // 
+            this.ControlGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.ControlGroupBox.Controls.Add(this.AboutButton);
             this.ControlGroupBox.Controls.Add(this.StartStopButton);
             this.ControlGroupBox.Controls.Add(this.AnalyzeButton);
@@ -312,10 +316,9 @@ namespace RotmgPCap.Forms
             this.ControlGroupBox.Controls.Add(this.SessionButton);
             this.ControlGroupBox.Location = new System.Drawing.Point(7, 273);
             this.ControlGroupBox.Name = "ControlGroupBox";
-            this.ControlGroupBox.Size = new System.Drawing.Size(163, 198);
+            this.ControlGroupBox.Size = new System.Drawing.Size(163, 416);
             this.ControlGroupBox.TabIndex = 2;
             this.ControlGroupBox.TabStop = false;
-            this.ControlGroupBox.Text = "Control";
             // 
             // AboutButton
             // 
@@ -420,13 +423,13 @@ namespace RotmgPCap.Forms
             this.HeaderPanel.Margin = new System.Windows.Forms.Padding(0);
             this.HeaderPanel.MinimumSize = new System.Drawing.Size(2, 64);
             this.HeaderPanel.Name = "HeaderPanel";
-            this.HeaderPanel.Size = new System.Drawing.Size(643, 64);
+            this.HeaderPanel.Size = new System.Drawing.Size(623, 64);
             this.HeaderPanel.TabIndex = 10;
             // 
             // PortTextBox
             // 
             this.PortTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.PortTextBox.Location = new System.Drawing.Point(409, 8);
+            this.PortTextBox.Location = new System.Drawing.Point(389, 8);
             this.PortTextBox.MaxLength = 5;
             this.PortTextBox.Name = "PortTextBox";
             this.PortTextBox.Size = new System.Drawing.Size(33, 20);
@@ -450,7 +453,7 @@ namespace RotmgPCap.Forms
             this.PacketListView.HideSelection = false;
             this.PacketListView.Location = new System.Drawing.Point(176, 71);
             this.PacketListView.Name = "PacketListView";
-            this.PacketListView.Size = new System.Drawing.Size(468, 560);
+            this.PacketListView.Size = new System.Drawing.Size(448, 618);
             this.PacketListView.TabIndex = 11;
             this.PacketListView.UseCompatibleStateImageBehavior = false;
             this.PacketListView.View = System.Windows.Forms.View.Details;
@@ -481,11 +484,20 @@ namespace RotmgPCap.Forms
             this.PDataColumn.Text = "Data";
             this.PDataColumn.Width = 80;
             // 
+            // PacketIdLabel
+            // 
+            this.PacketIdLabel.AutoSize = true;
+            this.PacketIdLabel.Location = new System.Drawing.Point(8, 117);
+            this.PacketIdLabel.Name = "PacketIdLabel";
+            this.PacketIdLabel.Size = new System.Drawing.Size(19, 13);
+            this.PacketIdLabel.TabIndex = 13;
+            this.PacketIdLabel.Text = "Id:";
+            // 
             // PacketCaptureForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(651, 638);
+            this.ClientSize = new System.Drawing.Size(631, 696);
             this.Controls.Add(this.PacketListView);
             this.Controls.Add(this.HeaderPanel);
             this.Controls.Add(this.ControlGroupBox);
@@ -543,5 +555,6 @@ namespace RotmgPCap.Forms
         private System.Windows.Forms.ColumnHeader PDirectionColumn;
         private System.Windows.Forms.ColumnHeader PNameColumn;
         private System.Windows.Forms.ColumnHeader PDataColumn;
+        private System.Windows.Forms.Label PacketIdLabel;
     }
 }

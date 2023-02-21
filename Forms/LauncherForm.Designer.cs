@@ -32,7 +32,7 @@ namespace RotmgPCap.Forms
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LauncherForm));
             this.progressBar = new System.Windows.Forms.ProgressBar();
             this.titleLabel = new System.Windows.Forms.Label();
-            this.subtitleLabel = new System.Windows.Forms.Label();
+            this.versionLabel = new System.Windows.Forms.Label();
             this.progressLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
@@ -54,15 +54,15 @@ namespace RotmgPCap.Forms
             this.titleLabel.TabIndex = 1;
             this.titleLabel.Text = "RotmgPCap";
             // 
-            // subtitleLabel
+            // versionLabel
             // 
-            this.subtitleLabel.AutoSize = true;
-            this.subtitleLabel.BackColor = System.Drawing.Color.Transparent;
-            this.subtitleLabel.Location = new System.Drawing.Point(248, 42);
-            this.subtitleLabel.Name = "subtitleLabel";
-            this.subtitleLabel.Size = new System.Drawing.Size(75, 13);
-            this.subtitleLabel.TabIndex = 2;
-            this.subtitleLabel.Text = "Rappelr#2228";
+            this.versionLabel.AutoSize = true;
+            this.versionLabel.BackColor = System.Drawing.Color.Transparent;
+            this.versionLabel.Location = new System.Drawing.Point(248, 42);
+            this.versionLabel.Name = "versionLabel";
+            this.versionLabel.Size = new System.Drawing.Size(75, 13);
+            this.versionLabel.TabIndex = 2;
+            this.versionLabel.Text = "Rappelr#2228";
             // 
             // progressLabel
             // 
@@ -81,7 +81,7 @@ namespace RotmgPCap.Forms
             this.BackgroundImage = global::RotmgPCap.Properties.Resources.Banner;
             this.ClientSize = new System.Drawing.Size(450, 110);
             this.Controls.Add(this.progressLabel);
-            this.Controls.Add(this.subtitleLabel);
+            this.Controls.Add(this.versionLabel);
             this.Controls.Add(this.titleLabel);
             this.Controls.Add(this.progressBar);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -100,7 +100,7 @@ namespace RotmgPCap.Forms
 
         private System.Windows.Forms.ProgressBar progressBar;
         private System.Windows.Forms.Label titleLabel;
-        private System.Windows.Forms.Label subtitleLabel;
+        private System.Windows.Forms.Label versionLabel;
         private System.Windows.Forms.Label progressLabel;
     }
 }
