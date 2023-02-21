@@ -1,7 +1,7 @@
 # RotmgPCap
 Captures [Realm of the Mad God](https://www.realmofthemadgod.com/) network traffic and offers binary analysis tools.
 
-![Join our Discord](https://i.imgur.com/OyBrOV9.png)
+![Screenshot](https://i.imgur.com/foSsulD.png)
 
 # Tutorial
 RotmgPCap works on windows only and requires you to install:
