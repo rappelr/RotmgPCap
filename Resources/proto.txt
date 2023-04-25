@@ -1,4 +1,4 @@
-﻿# RotmgPCap v1.1.0
+﻿﻿# RotmgPCap v1.1.0
 # Version 5
 # Jan 2023
 # file: proto.txt
@@ -68,7 +68,7 @@ $NotificationDungeon; 8
 :ObjectStatusData; Compressed:ObjectId, WorldPosData:Position, Compressed:@StatDataCount, +
    (StatDataCount* StatData):StatData
 :ObjectData; UInt16:ObjectType, ObjectStatusData:StatusData
-:SlotObjectData; Int32:ObjectId, Int32:SlotId, Int32:ObjectType
+:SlotObjectData; Int32:ObjectId, Int32:SlotId, Int32:ObjectType Byte:Unknown
 :QuestData; Utf:QuestId, Utf:Name, Utf:Description, Utf:Expiration, Int32:Weight, Int32:Category, +
    Int16:@RequirementCount, (RequirementCount* Int32):Requirements, +
    Int16:@RewardCount, (RewardCount* Int32):Rewards, Boolean:Completed, Boolean:ItemOfChoice, +
@@ -89,7 +89,6 @@ $NotificationDungeon; 8
 
 Failure, 0; Int32:ErrorId, Utf:ErrorDescription
 
-Hello, 1; Utf:BuildVersion, Int32:GameId, Utf:Guid, Int32:KeyTime, Int16:@KeyLength, +
 Hello, 74; Utf:BuildVersion, Int32:GameId, Utf:Guid, Int32:KeyTime, Int16:@KeyLength, +
    (KeyLength* Byte):Key, Utf:EntryTag, Utf:GameNet, Utf:GameNetUserId, +
    Utf:UserToken, Utf:Token
@@ -124,7 +123,7 @@ FeedPet, 16; Byte:PetTransType, Int32:PetIdOne, Int32:PetIdTwo, Int32:ObjectId, 
 
 Goto, 18; Int32:ObjectId, WorldPosData:Position
 
-InvSwap, 19; Int32:Time, WorldPosData:Position, SlotObjectData:Slot1, SlotObjectData:Slot2
+InvSwap, 55; Int32:Time, WorldPosData:Position, SlotObjectData:Slot1, SlotObjectData:Slot2
 
 OtherHit, 20; Int32:Time, UInt16:BulletId, Int32:OwnerId, Int32:TargetId
 
@@ -198,7 +197,6 @@ Notification, 67; Byte:@Effect, Byte:ExtraValue, +
 
 ClientStat, 69; Utf:Name, Int32:Value
 
-Teleport, 74; Int32:ObjectId, Utf:ObjectName
 Teleport, 1; Int32:ObjectId, Utf:ObjectName
 
 Damage, 75; Int32:TargetId, Byte:@EffectCount, (EffectCount* Byte):Effect, UInt16:Damage, +
