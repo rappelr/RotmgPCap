@@ -104,10 +104,10 @@ JoinGuild, 7; Utf:Name
 
 Ping, 8; Int32:Serial
 
-NewTick, 9; Int32:TickId, Int32:TickTime, Int32:ServerRealTimeMS, Int16:ServerRealTimeMS, +
+NewTick, 10; Int32:TickId, Int32:TickTime, Int32:ServerRealTimeMS, Int16:ServerRealTimeMS, +
    Int16:@ObjectStatusCount, (ObjectStatusCount* ObjectStatusData):ObjectStatus
 
-PlayerText, 10; Utf:Text
+PlayerText, 9; Utf:Text
 
 UseItem, 11; Int32:Time, SlotObjectData:SlotData, WorldPosData:Position, Byte:UseType
 
@@ -151,7 +151,7 @@ AcceptTrade, 36; Int16:@ClientOfferLength, (ClientOfferLength* Boolean):ClientOf
 
 ChangeGuildRank, 37; Utf:Name, Int32:Rank
 
-Move, 42; Int32:TickId, Int32:Time, +
+Move, 62; Int32:TickId, Int32:Time, +
     Int16:@MoveRecordCount, (MoveRecordCount* MoveRecord):MoveRecord
 
 Text, 44; Utf:Name, Int32:ObjectId, Int16:NumStars, Byte:BubbleTime, Utf:Recipient, +
@@ -170,15 +170,15 @@ ResetDailyQuests, 52;
 
 ChangeTrade, 56; Int16:@OfferLength, (OfferLength* Boolean):Offer
 
-Load, 57; Int32:CharacterId, Boolean:IsChallenger
+Load, 61; Int32:CharacterId, Boolean:IsChallenger
 
 QuestRedeem, 58; Utf:QuestId, Int32:Item, Int16:@SlotsLength, (SlotsLength* SlotObjectData):Slots
 
 CreateGuild, 59; Utf:Name
 
-Create, 61; Int16:ClassType, Int16:SkinType, Boolean:IsChallenger
+Create, 57; Int16:ClassType, Int16:SkinType, Boolean:IsChallenger
 
-Update, 62; WorldPosData:Position, Byte:unknown1, +
+Update, 42; WorldPosData:Position, Byte:unknown1, +
    Compressed:@GroundTileCount, (GroundTileCount* GroundTile):GroundTile, +
    Compressed:@ObjectDataCount, (ObjectDataCount* ObjectData):ObjectData, +
    Compressed:@DropCount, (DropCount* Compressed):Drop
