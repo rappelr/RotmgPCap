@@ -72,7 +72,7 @@ namespace RotmgPCap.Capture
         {
             PacketProto proto = rotmgPCap.PacketManager.GetOrCreate(capturePacket.Id);
             
-            if (proto.Id == 1)
+            if (proto.Id == 74)
             {
                 Crypto.Reset(false);
                 outSync = true;

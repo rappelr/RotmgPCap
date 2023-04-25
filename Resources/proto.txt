@@ -90,6 +90,7 @@ $NotificationDungeon; 8
 Failure, 0; Int32:ErrorId, Utf:ErrorDescription
 
 Hello, 1; Utf:BuildVersion, Int32:GameId, Utf:Guid, Int32:KeyTime, Int16:@KeyLength, +
+Hello, 74; Utf:BuildVersion, Int32:GameId, Utf:Guid, Int32:KeyTime, Int16:@KeyLength, +
    (KeyLength* Byte):Key, Utf:EntryTag, Utf:GameNet, Utf:GameNetUserId, +
    Utf:UserToken, Utf:Token
 
@@ -198,6 +199,7 @@ Notification, 67; Byte:@Effect, Byte:ExtraValue, +
 ClientStat, 69; Utf:Name, Int32:Value
 
 Teleport, 74; Int32:ObjectId, Utf:ObjectName
+Teleport, 1; Int32:ObjectId, Utf:ObjectName
 
 Damage, 75; Int32:TargetId, Byte:@EffectCount, (EffectCount* Byte):Effect, UInt16:Damage, +
    Boolean:ArmorPierce, UInt16:BulletId, Int32:ObjectId

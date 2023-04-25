@@ -42,7 +42,7 @@ namespace RotmgPCap.Capture
 
             closing = false;
 
-            thread = new Thread(() => Run());
+            thread = new Thread(Run);
             thread.Start();
             
             try

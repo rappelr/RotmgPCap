@@ -63,9 +63,7 @@ namespace RotmgPCap.Capture
             {
                 x = x + 1 & (int)byte.MaxValue;
                 y = (int)engineState[x] + y & (int)byte.MaxValue;
-                byte num = engineState[x];
-                engineState[x] = engineState[y];
-                engineState[y] = num;
+                (engineState[x], engineState[y]) = (engineState[y], engineState[x]);
                 output[index + outOff] = (byte)(input[index + inOff] ^ (uint)engineState[engineState[x] + engineState[y] & byte.MaxValue]);
             }
         }
@@ -83,9 +81,7 @@ namespace RotmgPCap.Capture
             for (int index3 = 0; index3 < STATE_LENGTH; ++index3)
             {
                 index2 = (keyBytes[index1] & byte.MaxValue) + engineState[index3] + index2 & byte.MaxValue;
-                byte num = engineState[index3];
-                engineState[index3] = engineState[index2];
-                engineState[index2] = num;
+                (engineState[index3], engineState[index2]) = (engineState[index2], engineState[index3]);
                 index1 = (index1 + 1) % keyBytes.Length;
             }
         }
