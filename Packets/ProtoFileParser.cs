@@ -1,7 +1,9 @@
 ﻿using RotmgPCap.Packets.DataTypes;
 using RotmgPCap.Properties;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Xml.Linq;
 
 namespace RotmgPCap.Packets
 {
@@ -101,6 +103,9 @@ namespace RotmgPCap.Packets
             if (tag.StartsWith("$"))
                 return ParseOption(tag.Substring(1), data);
 
+            if (tag.StartsWith("%"))
+                return ParseEnum(tag.Substring(1), data);
+
             if (tag.StartsWith(":"))
                 return ParseGroup(tag.Substring(1), data);
 
@@ -167,6 +172,29 @@ namespace RotmgPCap.Packets
             return true;
         }
 
+        private bool ParseEnum(string tag, string data)
+        {
+            if (!VerifyName(tag))
+                return false;
+
+            var dict = new Dictionary<int, string>();
+
+            foreach (string str in data.Split(','))
+            {
+                string[] pair = str.Split(':');
+                if (pair.Length < 2) continue;
+                if (!int.TryParse(pair[0], out int index))
+                    return false;
+                dict.Add(index, pair[1]);
+            }
+
+            if (dict.Count == 0)
+                return false;
+
+            manager.Profile.Add(new NamedEnum(tag, dict));
+            return true;
+        }
+
         private TypeInstance[] ParseTypeInstanceList(string data, bool allowEmpty = false)
         {
             if (data.Length == 0)
@@ -218,6 +246,7 @@ namespace RotmgPCap.Packets
 
             if (type.StartsWith("("))
             {
+                int enumIndex = type.IndexOf('%');
                 int optionIndex = type.IndexOf('$');
                 int repeatIndex = type.IndexOf('*');
 
@@ -226,7 +255,20 @@ namespace RotmgPCap.Packets
                 else
                     type = type.Substring(1, type.Length - 2);
 
-                if (optionIndex != -1)
+                if (enumIndex != -1)
+                {
+                    string enumName = type.Substring(0, enumIndex - 1);
+                    string enumDataTypeName = type.Substring(enumIndex);
+                    
+                    if (!manager.Profile.Types.TryGetValue(enumDataTypeName, out DataType enumDataType))
+                        return null;
+
+                    if (!VerifyName(name))
+                        return null;
+
+                    return new TypeInstance(new EnumValue(enumName, enumDataType), name);
+                }
+                else if (optionIndex != -1)
                 {
                     string valueNameName = type.Substring(0, optionIndex - 1);
 
@@ -259,6 +301,7 @@ namespace RotmgPCap.Packets
 
                     if (VerifyName(name))
                         return new TypeInstance(new Optional(reference, optionalName, foundA, foundB), name);
+
                     return null;
                 }
                 else if (repeatIndex != -1)

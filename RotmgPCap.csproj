@@ -106,8 +106,10 @@
       <DependentUpon>SessionForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Packets\DataTypes\DataType.cs" />
+    <Compile Include="Packets\DataTypes\EnumValue.cs" />
     <Compile Include="Packets\DataTypes\GroupType.cs" />
     <Compile Include="Packets\DataTypes\ListType.cs" />
+    <Compile Include="Packets\DataTypes\Enum.cs" />
     <Compile Include="Packets\DataTypes\Option.cs" />
     <Compile Include="Packets\DataTypes\Optional.cs" />
     <Compile Include="Packets\DataTypes\PacketHeader.cs" />
