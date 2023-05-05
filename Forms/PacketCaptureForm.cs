@@ -226,20 +226,14 @@ namespace RotmgPCap.Forms
             active = false;
         }
 
-        internal void SetSync(bool incoming) => Invoke(new OnSync(OnSync), incoming);
+        internal void SetSync() => Invoke(new Action(OnSync));
 
-        private void OnSync(bool incoming)
+        private void OnSync()
         {
-            if(incoming)
-            {
-                IncomingSyncValueLabel.Text = "true";
-                IncomingSyncValueLabel.ForeColor = Color.Green;
-            }
-            else
-            {
-                OutgoingSyncValueLabel.Text = "true";
-                OutgoingSyncValueLabel.ForeColor = Color.Green;
-            }
+            IncomingSyncValueLabel.Text = "true";
+            IncomingSyncValueLabel.ForeColor = Color.Green;
+            OutgoingSyncValueLabel.Text = "true";
+            OutgoingSyncValueLabel.ForeColor = Color.Green;
         }
 
         internal void AddPacketsCaught(int count) => Invoke(new OnUpdateCaught(OnCaught), count);
@@ -271,6 +265,9 @@ namespace RotmgPCap.Forms
 
             PacketListView.Items.Add(lvi);
             Packets.Add(packet);
+
+            if (!active)
+                ClearButton.Enabled = true;
         }
 
         internal void AddressDetected(string address) => Invoke(new OnAddressDetected(OnAddressDetected), address);
@@ -435,7 +432,6 @@ namespace RotmgPCap.Forms
         private void PacketCaptureForm_FormClosing(object sender, FormClosingEventArgs e) => RotmgPCap.Close();
     }
 
-    internal delegate void OnSync(bool incoming);
     internal delegate void OnUpdateCaught(int addative);
     internal delegate void OnPacket(Packet packet);
     internal delegate void OnAddressDetected(string address);

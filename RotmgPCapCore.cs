@@ -97,7 +97,7 @@ namespace RotmgPCap
 
         internal void AddPacketsCaught(int count) => captureForm.AddPacketsCaught(count);
 
-        internal void SetSync(bool incoming) => captureForm.SetSync(incoming);
+        internal void SetSync() => captureForm.SetSync();
 
         private void Open(ThreadStart threadStart)
         {

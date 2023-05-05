@@ -13,20 +13,10 @@ namespace RotmgPCap.Capture
 
         static Crypto() => Reset();
 
-        internal static void Reset(bool? incoming = null)
+        internal static void Reset()
         {
-            if (incoming.HasValue)
-            {
-                if (incoming.Value)
-                    Incoming = new Crypto(INCOMING_KEY);
-                else
-                    Outgoing = new Crypto(OUTGOUNG_KEY);
-            }
-            else
-            {
-                Incoming = new Crypto(INCOMING_KEY);
-                Outgoing = new Crypto(OUTGOUNG_KEY);
-            }
+            Incoming = new Crypto(INCOMING_KEY);
+            Outgoing = new Crypto(OUTGOUNG_KEY);
         }
 
         private byte[] engineState;

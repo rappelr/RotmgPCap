@@ -74,15 +74,10 @@ namespace RotmgPCap.Capture
             
             if (!outSync && proto.Id == 74)
             {
-                Crypto.Reset(false);
+                Crypto.Reset();
                 outSync = true;
-                rotmgPCap.SetSync(false);
-            }
-            else if (!inSync && (proto.Id == 92 || proto.Id == 0))
-            {
-                Crypto.Reset(true);
                 inSync = true;
-                rotmgPCap.SetSync(true);
+                rotmgPCap.SetSync();
             }
 
             bool desync = !(capturePacket.Incoming ? inSync : outSync);
